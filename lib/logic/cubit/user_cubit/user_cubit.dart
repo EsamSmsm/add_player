@@ -16,7 +16,7 @@ class UserCubit extends Cubit<UserState> {
   static UserCubit get(context) => BlocProvider.of(context);
 
   List<UserModel> users = [];
-  List<UserModel> players = [];
+  List<UserModel?> players = List.generate(10, (index) => null);
 
   Future<void> getUsers({required int limit}) async {
     emit(GetUsersLoading());
@@ -46,17 +46,28 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  int currentIndex = 0;
   Future<void> addPlayer(UserModel user) async {
     emit(AddPlayerLoading());
-    user.isAdded = true;
-    players.add(user);
-    emit(AddPlayerSuccess());
+    if (currentIndex < players.length) {
+      user.isAdded = true;
+      players.insert(currentIndex, user);
+      players.removeLast();
+      currentIndex++;
+      emit(AddPlayerSuccess());
+    } else {
+      emit(AddPlayerFailed());
+    }
   }
 
   Future<void> removePlayer(UserModel user) async {
     emit(AddPlayerLoading());
-    user.isAdded = false;
-    players.remove(user);
-    emit(AddPlayerSuccess());
+    if (currentIndex > 0) {
+      user.isAdded = false;
+      players.remove(user);
+      players.add(null);
+      currentIndex--;
+      emit(AddPlayerSuccess());
+    }
   }
 }

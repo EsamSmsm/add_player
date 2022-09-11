@@ -23,7 +23,7 @@ class _AddPlayerScreenState extends State<AddPlayerScreen> {
   var scrollController = ScrollController();
   late List<UserModel> searchedUsers;
   late List<UserModel> users;
-  late List<UserModel> players;
+  late List<UserModel?> players;
   final searchController = TextEditingController();
   @override
   void initState() {
@@ -89,7 +89,9 @@ class _AddPlayerScreenState extends State<AddPlayerScreen> {
                             if (index == 0) {
                               return const CurrentUserTile();
                             } else {
-                              return PlayerTile(player: players[index - 1]);
+                              return players[index - 1] == null
+                                  ? const PlaceHolderTile()
+                                  : PlayerTile(player: players[index - 1]!);
                             }
                           }),
                     ),

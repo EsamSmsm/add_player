@@ -26,3 +26,5 @@ class LoadMoreUsersFailed extends UserState {
 class AddPlayerLoading extends UserState {}
 
 class AddPlayerSuccess extends UserState {}
+
+class AddPlayerFailed extends UserState {}

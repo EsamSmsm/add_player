@@ -77,3 +77,29 @@ class CurrentUserTile extends StatelessWidget {
     );
   }
 }
+
+class PlaceHolderTile extends StatelessWidget {
+  const PlaceHolderTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundColor: Colors.grey.shade300,
+          radius: 30.r,
+          child: const Icon(CupertinoIcons.person_add),
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
+        Text(
+          '',
+          style: TextStyle(color: Colors.black54, fontSize: 12.sp),
+        ),
+      ],
+    );
+  }
+}
